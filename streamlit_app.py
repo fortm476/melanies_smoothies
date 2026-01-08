@@ -19,13 +19,32 @@ ingredients_list = st.multiselect(
     my_dataframe
 )
 
+user_text = st.text_input("Enter text")
+request_type = st.selectbox(
+    "What type of request is this?",
+    [
+        "New dashboard",
+        "Enhancement to existing dashboard",
+        "Data quality investigation",
+        "Bug fix",
+        "Ad-hoc analysis",
+        "Other",
+    ],
+)
+
+if user_text:
+    st.write("You entered:")
+    st.write(user_text)
+
+st.write("Selected request type:", request_type)
+
 if ingredients_list: 
 
     ingredients_string = ''
     for fruit_chosen in ingredients_list:
         ingredients_string += fruit_chosen + ' '
 
-        st.subheader(fruit_chosen + 'Nutrition Information')
+        st.subheader(fruit_chosen + ' Nutrition Information')
         smoothiefroot_response = requests.get("https://my.smoothiefroot.com/api/fruit/"+fruit_chosen)
         sf_df = st.dataframe(data=smoothiefroot_response.json(), use_container_width=True)
 
