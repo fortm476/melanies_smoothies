@@ -11,32 +11,14 @@ st.write("The name on your Smoothie will be", name_on_order)
 
 cnx = st.connection("snowflake")
 session = cnx.session()
-my_dataframe = session.table("smoothies.public.fruit_options").select(col('FRUIT_NAME'))
-#st.dataframe(data=my_dataframe, use_container_width=True)
+my_dataframe = session.table("smoothies.public.fruit_options").select(col('FRUIT_NAME'), col('SEARCH_ON'))
+st.dataframe(data=my_dataframe, use_container_width=True)
+st.stop()
 
 ingredients_list = st.multiselect(
     "Choose up to 5 ingredients",
     my_dataframe
 )
-
-user_text = st.text_input("Enter text")
-request_type = st.selectbox(
-    "What type of request is this?",
-    [
-        "New dashboard",
-        "Enhancement to existing dashboard",
-        "Data quality investigation",
-        "Bug fix",
-        "Ad-hoc analysis",
-        "Other",
-    ],
-)
-
-if user_text:
-    st.write("You entered:")
-    st.write(user_text)
-
-st.write("Selected request type:", request_type)
 
 if ingredients_list: 
 
